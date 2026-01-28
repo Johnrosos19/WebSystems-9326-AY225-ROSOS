@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>John Wilfred R| IT Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    :root {
+        --bg-dark: #0a0b10;
+        --card-bg: rgba(20, 22, 30, 0.8);
+        --primary-neon: #00f2ff; /* Cyan */
+        --secondary-neon: #ff00ea; /* Magenta */
+        --text-main: #e0e0e0;
+        --text-dim: #b0b0b0;
+        --border-glow: rgba(0, 242, 255, 0.3);
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    html {
+        scroll-behavior: smooth; /* Ensures all internal links scroll smoothly */
+    }
+
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background-color: var(--bg-dark);
+        background-image: 
+            radial-gradient(circle at 10% 20%, rgba(0, 242, 255, 0.05) 0%, transparent 40%),
+            radial-gradient(circle at 90% 80%, rgba(255, 0, 234, 0.05) 0%, transparent 40%);
+        background-attachment: fixed;
+        color: var(--text-main);
+        line-height: 1.6;
+    }
+
+    /* SCROLL TO TOP BUTTON */
+    #scrollTopBtn {
+        display: none; /* Hidden by default */
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 100;
+        background: var(--secondary-neon);
+        color: white;
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 20px;
+        font-weight: bold;
+        box-shadow: 0 0 15px var(--secondary-neon);
+        transition: var(--transition);
+        align-items: center;
+        justify-content: center;
+    }
+
+    #scrollTopBtn:hover {
+        background: var(--primary-neon);
+        box-shadow: 0 0 20px var(--primary-neon);
+        transform: translateY(-5px);
+    }
+
+    /* Header & Nav */
+    header {
+        height: 80vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 0 5%;
+    }
+
+    header h1 {
+        font-size: clamp(2.5rem, 8vw, 5rem);
+        text-transform: uppercase;
+        letter-spacing: 5px;
+        background: linear-gradient(90deg, var(--primary-neon), var(--secondary-neon));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 0 10px rgba(0, 242, 255, 0.3));
+        margin-bottom: 10px;
+    }
+
+    header p {
+        font-size: 1.2rem;
+        color: var(--text-dim);
+        letter-spacing: 2px;
+        margin-bottom: 40px;
+    }
+
+    nav {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    nav a {
+        color: var(--text-main);
+        text-decoration: none;
+        padding: 8px 20px;
+        border: 1px solid var(--border-glow);
+        border-radius: 4px;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        transition: var(--transition);
+    }
+
+    nav a:hover {
+        background: var(--primary-neon);
+        color: var(--bg-dark);
+        box-shadow: 0 0 20px var(--primary-neon);
+    }
+
+    /* Sections */
+    section {
+        max-width: 1000px;
+        margin: 60px auto;
+        padding: 60px 40px;
+        background: var(--card-bg);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+        color: var(--primary-neon);
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    h2::after {
+        content: "";
+        height: 1px;
+        flex-grow: 1;
+        background: linear-gradient(90deg, var(--primary-neon), transparent);
+    }
+
+    /* Skills */
+    .skills ul {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .skills li {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 8px 18px;
+        border-radius: 4px;
+        border-left: 3px solid var(--secondary-neon);
+        font-size: 0.9rem;
+        transition: var(--transition);
+    }
+
+    .skills li:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-3px);
+    }
+
+    /* Projects */
+    .projects {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+    }
+
+    .project-card {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 30px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: var(--transition);
+    }
+
+    .project-card:hover {
+        border-color: var(--secondary-neon);
+        transform: translateY(-5px);
+    }
+
+    .project-card h3 {
+        color: var(--secondary-neon);
+        margin-bottom: 15px;
+    }
+
+    .btn {
+        display: inline-block;
+        margin-top: 20px;
+        color: var(--primary-neon);
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        border: 1px solid var(--primary-neon);
+        padding: 8px 20px;
+        border-radius: 4px;
+        transition: var(--transition);
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background: var(--primary-neon);
+        color: var(--bg-dark);
+    }
+
+    /* Certifications */
+    .certifications ul {
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 10px;
+    }
+
+    .certifications li {
+        font-size: 0.9rem;
+        color: var(--text-dim);
+        padding: 5px 0;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .certifications li::before {
+        content: "▹";
+        color: var(--primary-neon);
+        margin-right: 10px;
+    }
+
+    /* SNAKE GAME DESIGN */
+    .game-container {
+        text-align: center;
+        background: #000;
+        padding: 20px;
+        border-radius: 10px;
+        border: 2px solid var(--primary-neon);
+        box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+    }
+
+    .game-container h1 {
+        font-size: 1.5rem;
+        color: var(--primary-neon);
+        text-shadow: 0 0 10px var(--primary-neon);
+        margin-bottom: 15px;
+    }
+
+    canvas {
+        background-color: #050505;
+        border: 1px solid #333;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .score-board {
+        color: var(--primary-neon);
+        font-family: monospace;
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    .mobile-controls {
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: repeat(3, 70px);
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .control-btn {
+        background: #111;
+        color: var(--primary-neon);
+        border: 1px solid var(--primary-neon);
+        height: 60px;
+        font-size: 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .control-btn:active {
+        background: var(--primary-neon);
+        color: #000;
+    }
+
+    #gameOverScreen {
+        position: absolute;
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.9);
+        color: var(--secondary-neon);
+        top: 0; left: 0; right: 0; bottom: 0;
+        z-index: 10;
+    }
+
+    #gameOverScreen.show { display: flex; }
+
+    .restart-btn {
+        background: var(--secondary-neon);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    /* Footer */
+    footer {
+        text-align: center;
+        padding: 60px 0;
+        color: var(--text-dim);
+        font-size: 0.8rem;
+    }
+
+    footer a {
+        color: var(--secondary-neon);
+        margin: 0 10px;
+    }
+
+    @media (max-width: 768px) {
+        section { padding: 40px 20px; margin: 20px 15px; }
+        header h1 { font-size: 2.8rem; }
+    }
+</style>
+</head>
+<body>
+
+<!-- FIXED SCROLL BUTTON -->
+<button id="scrollTopBtn" title="Go to top">↑</button>
+
+<header>
+    <h1>Joh Wilfred G. Rosos</h1>
+    <p>IT Student | Aspiring Web Developer</p>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#game-section">Play Game</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<section id="about">
+    <h2>About Me</h2>
+    <p>
+        I’m Joh Wilfred G. Rosos, a second-year IT student specializing in Game Development. I’m enthusiastic about learning and keen to expand my skills in web development and other areas of technology. Beyond academics, I stay active through cycling, going to the gym, and playing basketball.
+    </p>
+</section>
+
+<section id="skills" class="skills">
+    <h2>Skills</h2>
+    <ul>
+        <li>HTML</li><li>CSS</li><li>JavaScript</li><li>Python</li><li>Git & GitHub</li><li>React</li><li>Node.js</li>
+    </ul>
+</section>
+
+<section id="projects">
+    <h2>Projects</h2>
+    <div class="projects">
+        <div class="project-card">
+            <h3>Personal Portfolio</h3>
+            <p>A responsive portfolio website showcasing my skills, projects, and achievements.</p>
+            <a class="btn" href="#about">View Portfolio</a>
+        </div>
+
+        <div class="project-card">
+            <h3>RUSH Game</h3>
+            <p>An interactive web-based game developed using HTML, CSS, and JavaScript.</p>
+            <!-- FIXED SCROLL BUTTON HERE -->
+            <a class="btn" href="#game-section">Scroll to Game</a>
+        </div>
+    </div>
+</section>
+
+<section id="certifications" class="certifications">
+    <h2>Certifications</h2>
+    <ul>
+        <li>Microsoft Digital Literacy</li>
+        <li>Wi-Fi 101 and Digital Thumbprint Program</li>
+        <li>SMART Android Mobile Apps Development</li>
+        <li>SMART Technopreneurship 101</li>
+        <li>Installing and Configuring Computer Systems</li>
+        <li>Setting Up Computer Networks</li>
+        <li>Maintaining Computer Systems</li>
+        <li>Visual Graphic Design Suite</li>
+        <li>UI/UX Design for Print & Web</li>
+    </ul>
+</section>
+
+<section id="game-section">
+  <div class="game-container">
+        <h1>NEON SNAKE</h1>
+        <div class="score-board">SCORE: <span id="score">0</span></div>
+        <div style="position: relative;">
+            <canvas id="gameCanvas" width="500" height="500"></canvas>
+            <div id="gameOverScreen">
+                <h2>SYSTEM FAILURE</h2>
+                <p>Final Score: <span id="finalScore">0</span></p>
+                <button class="restart-btn" onclick="restartGame()">REBOOT SYSTEM</button>
+            </div>
+        </div>
+        
+        <div class="mobile-controls">
+            <div></div><button class="control-btn up" id="btnUp">▲</button><div></div>
+            <button class="control-btn left" id="btnLeft">◄</button>
+            <button class="control-btn down" id="btnDown">▼</button>
+            <button class="control-btn right" id="btnRight">►</button>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <h2>Contact</h2>
+    <p>Email: <a href="https://myaccount.google.com/personal-info?gar=WzEyMF0&hl=en&utm_source=OGB&utm_medium=act&pli=1" style="color:var(--primary-neon)">johnrosos84@gmail.com</a></p>
+    <p>Instagram: <a href="https://www.instagram.com/johnrosos2/" target="_blank" style="color:var(--primary-neon)">johnrosos2</a></p>
+    <p>Facebook: <a href="https://www.facebook.com/john.dimplez" target="_blank" style="color:var(--primary-neon)">John Rosos</a></p>
+</section>
+
+<footer>
+    <p>&copy; 2026 Joh Wilfred G. Rosos | All Rights Reserved</p>
+</footer>
+
+<script>
+    // --- SCROLL TO TOP LOGIC ---
+    const topBtn = document.getElementById("scrollTopBtn");
+
+    window.onscroll = function() {
+        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            topBtn.style.display = "flex";
+        } else {
+            topBtn.style.display = "none";
+        }
+    };
+
+    topBtn.onclick = function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // --- SNAKE GAME LOGIC ---
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const scoreElement = document.getElementById('score');
+    const finalScoreElement = document.getElementById('finalScore');
+    const gameOverScreen = document.getElementById('gameOverScreen');
+
+    const TILE_SIZE = 20;
+    const GRID_WIDTH = 25;
+    const GRID_HEIGHT = 25;
+    const GAME_SPEED = 100;
+
+    let snake = [];
+    let food = {};
+    let direction = 'RIGHT';
+    let nextDirection = 'RIGHT';
+    let running = false;
+    let gameOver = false;
+    let score = 0;
+    let gameLoop = null;
+
+    function init() {
+        canvas.width = GRID_WIDTH * TILE_SIZE;
+        canvas.height = GRID_HEIGHT * TILE_SIZE;
+        setupMobileControls();
+        startGame();
+    }
+
+    function setupMobileControls() {
+        const controls = {'btnUp': 'UP', 'btnDown': 'DOWN', 'btnLeft': 'LEFT', 'btnRight': 'RIGHT'};
+        Object.keys(controls).forEach(id => {
+            const btn = document.getElementById(id);
+            const move = controls[id];
+            const handleMove = (e) => {
+                e.preventDefault();
+                if (!running) return;
+                if (move === 'UP' && direction !== 'DOWN') nextDirection = 'UP';
+                if (move === 'DOWN' && direction !== 'UP') nextDirection = 'DOWN';
+                if (move === 'LEFT' && direction !== 'RIGHT') nextDirection = 'LEFT';
+                if (move === 'RIGHT' && direction !== 'LEFT') nextDirection = 'RIGHT';
+            };
+            btn.addEventListener('touchstart', handleMove);
+            btn.addEventListener('click', handleMove);
+        });
+    }
+
+    function startGame() {
+        snake = [{ x: 5, y: 5 }, { x: 4, y: 5 }, { x: 3, y: 5 }];
+        direction = 'RIGHT';
+        nextDirection = 'RIGHT';
+        score = 0;
+        gameOver = false;
+        running = true;
+        updateScore();
+        gameOverScreen.classList.remove('show');
+        spawnFood();
+        if (gameLoop) clearInterval(gameLoop);
+        gameLoop = setInterval(update, GAME_SPEED);
+    }
+
+    function spawnFood() {
+        let validPosition = false;
+        while (!validPosition) {
+            food = {
+                x: Math.floor(Math.random() * GRID_WIDTH),
+                y: Math.floor(Math.random() * GRID_HEIGHT)
+            };
+            validPosition = !snake.some(s => s.x === food.x && s.y === food.y);
+        }
+    }
+
+    function update() {
+        if (!running) return;
+        direction = nextDirection;
+        const head = { ...snake[0] };
+        if (direction === 'UP') head.y--;
+        if (direction === 'DOWN') head.y++;
+        if (direction === 'LEFT') head.x--;
+        if (direction === 'RIGHT') head.x++;
+
+        if (head.x < 0 || head.x >= GRID_WIDTH || head.y < 0 || head.y >= GRID_HEIGHT ||
+            snake.some(s => s.x === head.x && s.y === head.y)) {
+            endGame();
+            return;
+        }
+
+        snake.unshift(head);
+        if (head.x === food.x && head.y === food.y) {
+            score += 10;
+            updateScore();
+            spawnFood();
+        } else {
+            snake.pop();
+        }
+        draw();
+    }
+
+    function draw() {
+        ctx.fillStyle = '#050505';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#ff00ea';
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = '#ff00ea';
+        ctx.fillRect(food.x * TILE_SIZE + 2, food.y * TILE_SIZE + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+        snake.forEach((segment, index) => {
+            ctx.fillStyle = index === 0 ? '#00f2ff' : '#008e96';
+            ctx.shadowBlur = index === 0 ? 20 : 0;
+            ctx.shadowColor = '#00f2ff';
+            ctx.fillRect(segment.x * TILE_SIZE + 1, segment.y * TILE_SIZE + 1, TILE_SIZE - 2, TILE_SIZE - 2);
+        });
+        ctx.shadowBlur = 0;
+    }
+
+    function endGame() {
+        running = false;
+        gameOver = true;
+        clearInterval(gameLoop);
+        finalScoreElement.textContent = score;
+        gameOverScreen.classList.add('show');
+    }
+
+    function updateScore() { scoreElement.textContent = score; }
+    function restartGame() { startGame(); }
+
+    document.addEventListener('keydown', (e) => {
+        if (gameOver && e.code === 'Space') restartGame();
+        if (!running) return;
+        const key = e.key.toLowerCase();
+        if ((key === 'arrowup' || key === 'w') && direction !== 'DOWN') nextDirection = 'UP';
+        if ((key === 'arrowdown' || key === 's') && direction !== 'UP') nextDirection = 'DOWN';
+        if ((key === 'arrowleft' || key === 'a') && direction !== 'RIGHT') nextDirection = 'LEFT';
+        if ((key === 'arrowright' || key === 'd') && direction !== 'LEFT') nextDirection = 'RIGHT';
+    });
+
+    init();
+</script>
+
+</body>
+</html>
