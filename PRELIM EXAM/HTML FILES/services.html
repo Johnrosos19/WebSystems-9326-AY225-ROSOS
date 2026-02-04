@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Our Services | Philippine Red Cross Inspired</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .service-detail { display:none; padding:15px; background:#f0f0f0; margin-top:10px; border-radius:4px; }
+        .extra-content { margin-top: 60px; padding-top: 40px; border-top: 1px solid #eee; }
+        .info-box { background: #fff; padding: 25px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ddd; }
+        .step-list { list-style: none; padding: 0; }
+        .step-list li { margin-bottom: 15px; padding-left: 30px; position: relative; }
+        .step-list li::before { content: "✓"; position: absolute; left: 0; color: #D32F2F; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        table th, table td { text-align: left; padding: 12px; border-bottom: 1px solid #ddd; }
+        table th { background-color: #f8f8f8; color: #D32F2F; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">PHILIPPINE RED CROSS</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="campaigns.html">Campaigns</a></li>
+            <li><a href="volunteer.html">Volunteer</a></li>
+        </ul>
+    </nav>
+ 
+    <section class="container">
+        <h2 style="text-align:center; margin-top: 30px;">Programs & Services</h2>
+        <p style="text-align:center; margin-bottom: 40px;">Click a service to view more information.</p>
+ 
+        <div class="grid">
+            <div class="card" onclick="toggleService('blood')">
+                <h3>Blood Services</h3>
+                <p>Providing 50% of the national blood requirement.</p>
+                <div id="blood" class="service-detail">
+                    We maintain blood centers nationwide, ensuring safe and accessible blood for all.
+                </div>
+            </div>
+ 
+            <div class="card" onclick="toggleService('disaster')">
+                <h3>Disaster Management</h3>
+                <p>Leading the way in relief and recovery.</p>
+                <div id="disaster" class="service-detail">
+                    Search and rescue operations, relief distribution, and community rehabilitation.
+                </div>
+            </div>
+ 
+            <div class="card" onclick="toggleService('health')">
+                <h3>Health Services</h3>
+                <p>Community-based health and welfare.</p>
+                <div id="health" class="service-detail">
+                    First aid training, vaccination support, and community health volunteers.
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW CONTENT TO ENABLE SCROLLING -->
+
+        <div class="extra-content">
+            <h2 style="color: #D32F2F; text-align: center;">Safety Training Programs</h2>
+            <p style="text-align: center;">We offer world-class training for individuals and corporate partners.</p>
+            
+            <div class="info-box">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Course Name</th>
+                            <th>Duration</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Standard First Aid</td>
+                            <td>2 Days</td>
+                            <td>Comprehensive course for workplace responders and safety officers.</td>
+                        </tr>
+                        <tr>
+                            <td>Basic Life Support (CPR)</td>
+                            <td>1 Day</td>
+                            <td>Cardiopulmonary Resuscitation techniques for adults and infants.</td>
+                        </tr>
+                        <tr>
+                            <td>Water Safety & Rescue</td>
+                            <td>5 Days</td>
+                            <td>Advanced swimming and lifesaving techniques for open water and pools.</td>
+                        </tr>
+                        <tr>
+                            <td>Emergency Medical Service</td>
+                            <td>15 Days</td>
+                            <td>Professional level training for aspiring ambulance technicians.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="extra-content">
+            <h2 style="color: #D32F2F; text-align: center;">How to Donate Blood</h2>
+            <div class="info-box">
+                <ul class="step-list">
+                    <li><strong>Step 1: Registration</strong> - Fill out the donor history questionnaire form at any Red Cross Blood Center.</li>
+                    <li><strong>Step 2: Weight & Vitals Check</strong> - Your weight, blood pressure, pulse, and temperature will be checked.</li>
+                    <li><strong>Step 3: Blood Screening</strong> - A small drop of blood will be taken to check your hemoglobin level and blood type.</li>
+                    <li><strong>Step 4: Physician's Interview</strong> - A doctor will review your history to ensure you are fit to donate.</li>
+                    <li><strong>Step 5: Extraction</strong> - The actual donation takes about 5 to 10 minutes, collecting 350ml to 450ml of blood.</li>
+                    <li><strong>Step 6: Recovery</strong> - Enjoy some light snacks and rest for 15 minutes before leaving the center.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="extra-content">
+            <h2 style="color: #D32F2F; text-align: center;">Emergency Response Fleet</h2>
+            <div class="grid">
+                <div class="card" style="cursor: default;">
+                    <h4>Ambulance Units</h4>
+                    <p>Equipped with Advanced Life Support (ALS) systems to provide pre-hospital care during transport.</p>
+                </div>
+                <div class="card" style="cursor: default;">
+                    <h4>Rescue Boats</h4>
+                    <p>Used for water search and rescue operations during heavy flooding and typhoons.</p>
+                </div>
+                <div class="card" style="cursor: default;">
+                    <h4>Amphibious Vehicles</h4>
+                    <p>Specialized trucks that can navigate both land and deep flood waters to reach isolated communities.</p>
+                </div>
+                <div class="card" style="cursor: default;">
+                    <h4>Mobile Kitchens</h4>
+                    <p>The "Hot Meals on Wheels" program provides ready-to-eat food to survivors in evacuation centers.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="extra-content" style="text-align: center; padding-bottom: 60px;">
+            <h3>Need help or training?</h3>
+            <p>Contact your nearest Philippine Red Cross Chapter or dial 143 for emergencies.</p>
+        </div>
+
+    </section>
+
+    <footer style="background: #333; color: white; text-align: center; padding: 20px 0;">
+        <p>&copy; 2024 Philippine Red Cross Inspired. Always First, Always Ready, Always There.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

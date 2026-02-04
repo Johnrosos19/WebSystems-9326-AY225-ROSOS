@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Volunteer | Philippine Red Cross Inspired</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">PHILIPPINE RED CROSS</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="campaigns.html">Campaigns</a></li>
+            <li><a href="volunteer.html">Volunteer</a></li>
+        </ul>
+    </nav>
+ 
+    <section class="container" style="max-width: 600px;">
+        <div class="card">
+            <h2 style="text-align:center">Volunteer Registration</h2>
+            <p style="text-align:center; color:var(--gray-text)">Join our network of heroes.</p>
+ 
+            <form id="volunteerForm" onsubmit="handleVolunteerSubmit(event)">
+                <label>Full Name</label>
+                <input type="text" id="vName" placeholder="Juan Dela Cruz" required>
+ 
+                <label>Email Address</label>
+                <input type="email" id="vEmail" placeholder="juan@example.com" required>
+ 
+                <label>Preferred Program</label>
+                <select id="vProgram">
+                    <option>Disaster Response</option>
+                    <option>Blood Services</option>
+                    <option>Safety Services (First Aid)</option>
+                    <option>Youth Red Cross</option>
+                </select>
+ 
+                <label>Why do you want to join?</label>
+                <textarea rows="4"></textarea>
+ 
+                <button type="submit" class="btn btn-red" style="width:100%">Submit Application</button>
+                <p id="formMsg" style="text-align:center; margin-top:15px;"></p>
+            </form>
+        </div>
+    </section>
+    <script src="script.js"></script>
+</body>
+</html>

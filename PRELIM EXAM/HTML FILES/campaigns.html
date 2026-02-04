@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campaigns | Philippine Red Cross Inspired</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">PHILIPPINE RED CROSS</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="campaigns.html">Campaigns</a></li>
+            <li><a href="volunteer.html">Volunteer</a></li>
+        </ul>
+    </nav>
+ 
+    <section class="container">
+        <h2 style="text-align:center; margin-bottom: 10px;">Our Advocacy & Campaigns</h2>
+        <p style="text-align:center; color: #666; margin-bottom: 40px;">Discover the various initiatives we lead to strengthen the nation's resilience.</p>
+        
+        <div id="campaign-list" class="grid" style="margin-top:30px;">
+            
+            <!-- Campaign 1 -->
+            <div class="card" style="cursor: default; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+                <h3 style="color:var(--prc-red)">Million People Run</h3>
+                <p>The Million People Run is a biennial fundraising marathon held simultaneously across various cities in the Philippines. It aims to raise awareness and funds for the PRC's disaster response capabilities and the acquisition of life-saving equipment like ambulances and rescue boats.</p>
+            </div>
+
+            <!-- Campaign 2 -->
+            <div class="card" style="cursor: default; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+                <h3 style="color:var(--prc-red)">Blood Samaritan Program</h3>
+                <p>This initiative seeks to help indigent patients who need blood but cannot afford the blood processing fees. Through the generosity of corporate and individual donors, we ensure that the most vulnerable have access to safe blood when they need it most.</p>
+            </div>
+
+            <!-- Campaign 3 -->
+            <div class="card" style="cursor: default; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+                <h3 style="color:var(--prc-red)">Red Cross 143</h3>
+                <p>Our flagship volunteer program that recruits and trains 44 volunteers (1 leader and 43 members) in every barangay. This campaign ensures that every community has a dedicated team of first responders ready to report and react during any emergency.</p>
+            </div>
+
+            <!-- Campaign 4 -->
+            <div class="card" style="cursor: default; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+                <h3 style="color:var(--prc-red)">WASH Initiative</h3>
+                <p>The Water, Sanitation, and Hygiene (WASH) campaign promotes healthy practices in rural communities and schools. We build toilets, provide handwashing facilities, and educate families on proper hygiene to prevent the spread of communicable diseases.</p>
+            </div>
+
+            <!-- Campaign 5 -->
+            <div class="card" style="cursor: default; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+                <h3 style="color:var(--prc-red)">I Give Hope</h3>
+                <p>A specialized donation drive focused on providing psychosocial support and "Dignity Kits" to women and children in evacuation centers. This campaign ensures that those displaced by war or disaster maintain their health and self-respect.</p>
+            </div>
+
+            <!-- Campaign 6 -->
+            <div class="card" style="cursor: default; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+                <h3 style="color:var(--prc-red)">Partnership for Disaster Resilience</h3>
+                <p>A corporate-focused campaign that encourages private companies to adopt specific communities. Together, we provide disaster-readiness training and emergency supply kits to ensure businesses and their neighbors can survive major calamities.</p>
+            </div>
+
+        </div>
+    </section>
+ 
+    <!-- Modal UI Component remains but will not be triggered by the cards above -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Campaign Info</h2>
+            <p style="margin: 20px 0;">Thank you for your interest.</p>
+            <button class="btn btn-red" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+ 
+    <script src="script.js"></script>
+</body>
+</html>
