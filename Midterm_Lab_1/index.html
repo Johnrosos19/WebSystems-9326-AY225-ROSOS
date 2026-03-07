@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATLUS · Official Game Catalog</title>
+  <!-- Atlus official fonts: Gothic/Serif combinations -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* --- ATLUS OFFICIAL WEBSITE INSPIRED DESIGN --- */
+    /* Dark dramatic theme with gold accents, gothic elegance, Japanese game company aesthetic */
+    
+    :root {
+      --atlus-black: #0a0a0a;
+      --atlus-dark: #1a1a1a;
+      --atlus-gray: #2a2a2a;
+      --atlus-gold: #c4a747;
+      --atlus-gold-light: #d4b85a;
+      --atlus-gold-dark: #9c8230;
+      --atlus-cream: #f5f0e6;
+      --atlus-text: #e5e5e5;
+      --atlus-text-dark: #999999;
+      --atlus-border: #3a3a3a;
+      --atlus-glow: rgba(196, 167, 71, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--atlus-black);
+      color: var(--atlus-text);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    /* Background texture - subtle Japanese pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        repeating-linear-gradient(45deg, 
+          rgba(196, 167, 71, 0.02) 0px, 
+          rgba(196, 167, 71, 0.02) 2px,
+          transparent 2px, 
+          transparent 8px);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .page {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 2rem 2rem 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Decorative top bar - Japanese temple inspired */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--atlus-gold) 20%, 
+        var(--atlus-gold) 80%, 
+        transparent 100%);
+      z-index: 1000;
+    }
+
+    .top-bar::before, .top-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 20px;
+      height: 6px;
+      background: var(--atlus-gold);
+    }
+
+    .top-bar::before {
+      left: 20%;
+    }
+
+    .top-bar::after {
+      right: 20%;
+    }
+
+    /* Header - Atlus official style */
+    .atlus-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+      padding: 2rem 0;
+    }
+
+    .atlus-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem;
+      font-weight: 700;
+      letter-spacing: 8px;
+      color: var(--atlus-gold);
+      text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .atlus-logo::before, .atlus-logo::after {
+      content: '✦';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--atlus-gold);
+      font-size: 2rem;
+      opacity: 0.5;
+    }
+
+    .atlus-logo::before {
+      left: -60px;
+    }
+
+    .atlus-logo::after {
+      right: -60px;
+    }
+
+    .atlus-logo span {
+      display: block;
+      font-size: 1.2rem;
+      letter-spacing: 4px;
+      color: var(--atlus-text);
+      font-weight: 400;
+      margin-top: 0.5rem;
+      font-family: 'Montserrat', sans-serif;
+      text-transform: uppercase;
+    }
+
+    .atlus-subheader {
+      font-size: 0.9rem;
+      color: var(--atlus-text-dark);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-top: 1rem;
+      font-weight: 400;
+    }
+
+    .atlus-subheader strong {
+      color: var(--atlus-gold);
+      font-weight: 600;
+    }
+
+    /* Ornament divider */
+    .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .ornament-line {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--atlus-gold), transparent);
+    }
+
+    .ornament-icon {
+      color: var(--atlus-gold);
+      font-size: 1.2rem;
+      opacity: 0.8;
+    }
+
+    /* Note panel - Atlus news style */
+    .atlus-note {
+      background: linear-gradient(135deg, var(--atlus-dark) 0%, var(--atlus-gray) 100%);
+      border: 2px solid var(--atlus-gold);
+      border-radius: 12px;
+      padding: 1.8rem 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .atlus-note::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--atlus-gold-light), transparent);
+    }
+
+    .atlus-note strong {
+      color: var(--atlus-gold);
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      display: block;
+      margin-bottom: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .atlus-note p {
+      color: var(--atlus-text);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .atlus-note code {
+      background: var(--atlus-black);
+      color: var(--atlus-gold-light);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-family: monospace;
+      border: 1px solid var(--atlus-gold-dark);
+    }
+
+    /* Control panel - Atlus menu style */
+    .atlus-controls {
+      background: linear-gradient(135deg, var(--atlus-dark) 0%, #1f1f1f 100%);
+      border: 2px solid var(--atlus-border);
+      border-radius: 16px;
+      padding: 2rem 2.5rem;
+      margin-bottom: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .atlus-controls::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--atlus-gold) 20%, 
+        var(--atlus-gold) 80%, 
+        transparent 100%);
+    }
+
+    .atlus-info {
+      flex: 1 1 300px;
+    }
+
+    .atlus-info .title {
+      color: var(--atlus-gold);
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .atlus-info .game-badge {
+      display: inline-block;
+      background: var(--atlus-gold);
+      color: var(--atlus-black);
+      font-size: 2rem;
+      font-weight: 700;
+      padding: 0.2rem 1rem;
+      border-radius: 8px;
+      margin-right: 0.8rem;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .atlus-info .game-text {
+      color: var(--atlus-text);
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+
+    .atlus-button {
+      background: transparent;
+      border: 3px solid var(--atlus-gold);
+      border-radius: 40px;
+      padding: 1rem 2.8rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--atlus-gold);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .atlus-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(196, 167, 71, 0.2), transparent);
+      transition: left 0.4s ease;
+    }
+
+    .atlus-button:hover {
+      background: var(--atlus-gold);
+      color: var(--atlus-black);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px var(--atlus-glow);
+    }
+
+    .atlus-button:hover::before {
+      left: 100%;
+    }
+
+    .atlus-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Status bar */
+    .atlus-status {
+      background: linear-gradient(135deg, var(--atlus-dark) 0%, var(--atlus-gray) 100%);
+      border: 1px solid var(--atlus-border);
+      border-left: 6px solid var(--atlus-gold);
+      border-radius: 8px;
+      padding: 1rem 2rem;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: var(--atlus-text);
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: 1px;
+    }
+
+    .atlus-status.loading {
+      border-left-color: var(--atlus-gold);
+    }
+
+    .atlus-status.error {
+      border-left-color: #b33c3c;
+    }
+
+    .atlus-status.done {
+      border-left-color: #3c9b3c;
+    }
+
+    .atlus-spinner {
+      width: 22px;
+      height: 22px;
+      border: 3px solid var(--atlus-gold);
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Stats cards */
+    .atlus-stats {
+      display: none;
+      gap: 1.8rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .atlus-stats.visible { display: flex; }
+
+    .atlus-stat-card {
+      flex: 1 1 150px;
+      background: linear-gradient(135deg, var(--atlus-dark) 0%, var(--atlus-gray) 100%);
+      border: 2px solid var(--atlus-border);
+      border-radius: 12px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .atlus-stat-card:hover {
+      border-color: var(--atlus-gold);
+      transform: translateY(-5px);
+    }
+
+    .atlus-stat-card::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 20%;
+      right: 20%;
+      height: 2px;
+      background: var(--atlus-gold);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .atlus-stat-card:hover::after {
+      opacity: 1;
+    }
+
+    .atlus-stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--atlus-gold);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 15px var(--atlus-glow);
+    }
+
+    .atlus-stat-label {
+      color: var(--atlus-text-dark);
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* Filter bar */
+    .atlus-filter {
+      display: none;
+      margin-bottom: 2rem;
+      gap: 1.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .atlus-filter.visible { display: flex; }
+
+    .atlus-filter-input {
+      flex: 1 1 300px;
+      background: linear-gradient(135deg, var(--atlus-dark) 0%, var(--atlus-gray) 100%);
+      border: 2px solid var(--atlus-border);
+      border-radius: 40px;
+      padding: 0.8rem 1.8rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      color: var(--atlus-text);
+      transition: all 0.3s ease;
+    }
+
+    .atlus-filter-input:focus {
+      outline: none;
+      border-color: var(--atlus-gold);
+      box-shadow: 0 0 20px var(--atlus-glow);
+    }
+
+    .atlus-filter-input::placeholder {
+      color: var(--atlus-text-dark);
+      letter-spacing: 1px;
+    }
+
+    .atlus-filter-count {
+      color: var(--atlus-gold);
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* Table - Atlus official game list style */
+    .atlus-table-container {
+      background: linear-gradient(135deg, var(--atlus-dark) 0%, var(--atlus-gray) 100%);
+      border: 2px solid var(--atlus-border);
+      border-radius: 16px;
+      overflow-x: auto;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .atlus-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      min-width: 1100px;
+    }
+
+    .atlus-table thead {
+      background: linear-gradient(135deg, var(--atlus-black) 0%, var(--atlus-dark) 100%);
+    }
+
+    .atlus-table th {
+      padding: 1.2rem 1rem;
+      text-align: left;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--atlus-gold);
+      border-bottom: 3px solid var(--atlus-gold);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .atlus-table th:hover {
+      color: var(--atlus-gold-light);
+      background: rgba(196, 167, 71, 0.1);
+    }
+
+    .atlus-table th .sort-icon {
+      margin-left: 0.5rem;
+      opacity: 0.7;
+    }
+
+    .atlus-table th.asc .sort-icon::after { content: ' ↑'; }
+    .atlus-table th.desc .sort-icon::after { content: ' ↓'; }
+    .atlus-table th:not(.asc):not(.desc) .sort-icon::after { content: ' ↕'; }
+
+    .atlus-table tbody tr {
+      border-bottom: 1px solid var(--atlus-border);
+      transition: all 0.2s ease;
+    }
+
+    .atlus-table tbody tr:hover {
+      background: rgba(196, 167, 71, 0.05);
+    }
+
+    .atlus-table td {
+      padding: 1rem;
+      color: var(--atlus-text);
+    }
+
+    .atlus-title-cell {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .atlus-title-cell a {
+      color: var(--atlus-text);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border-bottom: 1px solid var(--atlus-gold);
+    }
+
+    .atlus-title-cell a:hover {
+      color: var(--atlus-gold);
+    }
+
+    .atlus-features-cell {
+      max-width: 280px;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: var(--atlus-text-dark);
+    }
+
+    .atlus-features-list {
+      margin: 0 0 0 1.2rem;
+      padding-left: 0;
+    }
+
+    .atlus-features-list li {
+      margin-bottom: 0.25rem;
+    }
+
+    .atlus-na {
+      color: var(--atlus-text-dark);
+      font-style: italic;
+    }
+
+    .atlus-platform-badge {
+      display: inline-block;
+      background: rgba(196, 167, 71, 0.1);
+      border: 2px solid var(--atlus-gold);
+      border-radius: 30px;
+      padding: 0.2rem 1rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--atlus-gold);
+      margin: 0.1rem 0.2rem;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Empty state */
+    .atlus-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 5rem 2rem;
+      color: var(--atlus-text-dark);
+      gap: 1.5rem;
+    }
+
+    .atlus-empty-icon {
+      font-size: 4rem;
+      color: var(--atlus-gold);
+      opacity: 0.5;
+    }
+
+    .atlus-empty p {
+      font-size: 1.1rem;
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: 1px;
+    }
+
+    /* Export bar */
+    .atlus-export {
+      display: none;
+      gap: 1.5rem;
+      justify-content: flex-end;
+      margin-top: 1.5rem;
+    }
+
+    .atlus-export.visible { display: flex; }
+
+    .atlus-export-btn {
+      background: transparent;
+      border: 3px solid var(--atlus-gold);
+      border-radius: 40px;
+      padding: 0.8rem 2rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--atlus-gold);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .atlus-export-btn:hover {
+      background: var(--atlus-gold);
+      color: var(--atlus-black);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px var(--atlus-glow);
+    }
+
+    /* Footer */
+    .atlus-footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 2px solid var(--atlus-border);
+      color: var(--atlus-text-dark);
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    .atlus-footer::before {
+      content: '✦';
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--atlus-black);
+      padding: 0 1rem;
+      color: var(--atlus-gold);
+      font-size: 1.2rem;
+    }
+
+    .atlus-footer strong {
+      color: var(--atlus-gold);
+      font-weight: 600;
+      margin: 0 0.5rem;
+    }
+
+    /* Japanese decorative elements */
+    .japanese-decoration {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--atlus-gold);
+      opacity: 0.1;
+      font-size: 3rem;
+      writing-mode: vertical-rl;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .atlus-logo { font-size: 3rem; }
+      .atlus-logo::before, .atlus-logo::after { display: none; }
+      .atlus-controls { flex-direction: column; text-align: center; }
+      .atlus-button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar"></div>
+  
+  <div class="page">
+
+    <!-- Atlus Official Header -->
+    <div class="atlus-header">
+      <div class="atlus-logo">
+        アトラス
+        <span>GAME SCRAPER</span>
+      </div>
+      <div class="atlus-subheader">
+        <strong>GAME CATALOG</strong> · PERSONA · SHIN MEGAMI TENSEI · ETRIAN ODYSSEY
+      </div>
+    </div>
+
+    <!-- Ornament Divider -->
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <span class="ornament-icon">✦</span>
+      <div class="ornament-line"></div>
+    </div>
+
+    <!-- Instruction Panel - Atlus News Style -->
+    <div class="atlus-note">
+      <strong>⚔️ SYSTEM GUIDE ⚔️</strong>
+      <p>Starts at <code>https://atlus.com/games/</code>, automatically discovers all game links, then scrapes the <strong>first 10 titles</strong>. Missing fields become "Not Available". Click any game title to visit its official page. All data is scraped live — zero hardcoded information.</p>
+    </div>
+
+    <!-- Main Control Panel -->
+    <div class="atlus-controls">
+      <div class="atlus-info">
+        <div class="title">TARGET ACQUIRED</div>
+        <div>
+          <span class="game-badge">10</span>
+          <span class="game-text">GAMES · DIRECT FEED</span>
+        </div>
+      </div>
+      <button class="atlus-button" id="scrapeBtn">✦ SCRAPE GAMES ✦</button>
+    </div>
+
+    <!-- Status Bar -->
+    <div id="statusBar" class="atlus-status" style="display: none;"></div>
+
+    <!-- Stats Cards -->
+    <div id="statsRow" class="atlus-stats">
+      <div class="atlus-stat-card">
+        <div class="atlus-stat-number" id="statTotal">0</div>
+        <div class="atlus-stat-label">GAMES FOUND</div>
+      </div>
+      <div class="atlus-stat-card">
+        <div class="atlus-stat-number" id="statFields">—</div>
+        <div class="atlus-stat-label">FILLED FIELDS</div>
+      </div>
+      <div class="atlus-stat-card">
+        <div class="atlus-stat-number" id="statDev">—</div>
+        <div class="atlus-stat-label">DEVELOPER KNOWN</div>
+      </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div id="filterBar" class="atlus-filter">
+      <input type="text" id="searchInput" class="atlus-filter-input" placeholder="FILTER BY TITLE · PLATFORM · FEATURES" />
+      <span id="resultCount" class="atlus-filter-count"></span>
+    </div>
+
+    <!-- Main Table -->
+    <div class="atlus-table-container" id="tableContainer">
+      <div id="emptyState" class="atlus-empty">
+        <div class="atlus-empty-icon">⚔️</div>
+        <p>Click "SCRAPE GAMES" to begin data retrieval</p>
+      </div>
+      <table id="gamesTable" class="atlus-table" style="display: none;">
+        <thead>
+          <tr>
+            <th onclick="sortGames('title')" id="th-title">Game Title <span class="sort-icon"></span></th>
+            <th onclick="sortGames('release')" id="th-release">Release Date <span class="sort-icon"></span></th>
+            <th>Key Features</th>
+            <th onclick="sortGames('platforms')" id="th-platforms">Platform(s) <span class="sort-icon"></span></th>
+            <th onclick="sortGames('developer')" id="th-developer">Developer <span class="sort-icon"></span></th>
+            <th onclick="sortGames('publisher')" id="th-publisher">Publisher <span class="sort-icon"></span></th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- Export Bar -->
+    <div id="exportBar" class="atlus-export">
+      <button class="atlus-export-btn" id="exportCsv">📥 EXPORT CSV</button>
+      <button class="atlus-export-btn" id="exportJson">📥 EXPORT JSON</button>
+    </div>
+
+    <!-- Footer with Credits -->
+    <div class="atlus-footer">
+      <div style="margin-bottom: 0.5rem;">
+        <strong>JOHN WILFRED G. ROSOS</strong> · <strong>BSIT-GD2</strong>
+      </div>
+      <div>⚡ ZERO HARDCODED DATA · DYNAMIC DISCOVERY · FIRST 10 GAMES ⚡</div>
+    </div>
+  </div>
+
+  <!-- Japanese Decoration -->
+  <div class="japanese-decoration">竜</div>
+
+  <script>
+    // --- NO HARDCODED URLS OR GAME DATA ---
+    // Only the starting listing page is fixed (like book scraper's base URL)
+    const LISTING_URL = "https://atlus.com/games/";
+    const MAX_GAMES = 10; // Limit to exactly 10 games
+
+    // --- State ---
+    let allGames = [];
+    let filteredGames = [];
+    let sortKey = 'title';
+    let sortDir = 'asc';
+
+    // DOM elements
+    const scrapeBtn = document.getElementById('scrapeBtn');
+    const statusBar = document.getElementById('statusBar');
+    const statsRow = document.getElementById('statsRow');
+    const filterBar = document.getElementById('filterBar');
+    const emptyState = document.getElementById('emptyState');
+    const gamesTable = document.getElementById('gamesTable');
+    const tableBody = document.getElementById('tableBody');
+    const exportBar = document.getElementById('exportBar');
+    const searchInput = document.getElementById('searchInput');
+    const resultCount = document.getElementById('resultCount');
+    const statTotal = document.getElementById('statTotal');
+    const statFields = document.getElementById('statFields');
+    const statDev = document.getElementById('statDev');
+    const exportCsv = document.getElementById('exportCsv');
+    const exportJson = document.getElementById('exportJson');
+
+    // --- Proxy setup (same as book scraper) ---
+    const PROXIES = [
+      {
+        name: 'corsproxy.io',
+        buildUrl: (target) => `https://corsproxy.io/?${encodeURIComponent(target)}`,
+        extract: async (res) => res.text(),
+      },
+      {
+        name: 'allorigins.win',
+        buildUrl: (target) => `https://api.allorigins.win/get?url=${encodeURIComponent(target)}`,
+        extract: async (res) => { const j = await res.json(); return j.contents; },
+      },
+      {
+        name: 'codetabs.com',
+        buildUrl: (target) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(target)}`,
+        extract: async (res) => res.text(),
+      },
+    ];
+
+    async function fetchWithFallback(targetUrl, onProgress) {
+      const errors = [];
+      for (const proxy of PROXIES) {
+        onProgress(`Trying ${proxy.name}...`);
+        try {
+          const proxyUrl = proxy.buildUrl(targetUrl);
+          const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(10000) });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const html = await proxy.extract(res);
+          if (!html || html.length < 200) throw new Error('Empty or too-short response');
+          return html;
+        } catch (err) {
+          errors.push(`${proxy.name}: ${err.message}`);
+        }
+      }
+      throw new Error(`All proxies failed.\n${errors.join('\n')}`);
+    }
+
+    function setStatus(type, msg) {
+      statusBar.style.display = 'flex';
+      statusBar.className = `atlus-status ${type}`;
+      statusBar.innerHTML = type === 'loading'
+        ? `<div class="atlus-spinner"></div>${msg}`
+        : msg;
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // --- Step 1: Discover game links from the listing page (limit to MAX_GAMES) ---
+    async function discoverGameLinks() {
+      setStatus('loading', 'Fetching game listing page...');
+      const html = await fetchWithFallback(LISTING_URL, (msg) => setStatus('loading', msg));
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+
+      // Find all links that look like game pages
+      const links = new Set(); // Use Set to avoid duplicates
+      
+      // Look for common Atlus game URL patterns
+      const selectors = [
+        'a[href*="/atlus-titles/"]',
+        'a[href*="/p5r"]',
+        'a[href*="/p5s"]',
+        'a[href*="/persona"]',
+        'a[href*="/smt"]',
+        'a[href*="/etrian"]',
+        'a[href*="/catherine"]',
+        'a[href*="/dragon"]',
+        '.game-grid a',
+        '.game-cell a',
+        '.product-grid a',
+        'article a'
+      ];
+
+      for (const selector of selectors) {
+        const elements = doc.querySelectorAll(selector);
+        elements.forEach(el => {
+          const href = el.getAttribute('href');
+          if (!href) return;
+          
+          try {
+            // Convert relative URLs to absolute
+            const fullUrl = new URL(href, LISTING_URL).href;
+            // Only keep Atlus game page URLs and stop if we have enough
+            if (fullUrl.includes('atlus.com/atlus-titles/') && !fullUrl.includes('#') && !links.has(fullUrl)) {
+              links.add(fullUrl);
+            }
+          } catch (e) {
+            // Ignore invalid URLs
+          }
+        });
+      }
+
+      // Also search for any text that might be game titles with links
+      const allLinks = doc.querySelectorAll('a[href]');
+      allLinks.forEach(a => {
+        const href = a.getAttribute('href');
+        const text = a.textContent.trim();
+        if (!href) return;
+        
+        // If it has a game-like title and points to atlus.com
+        if (text.length > 3 && href.includes('atlus.com') && !href.includes('#') && !links.has(href)) {
+          try {
+            const fullUrl = new URL(href, LISTING_URL).href;
+            if (fullUrl.includes('atlus-titles/')) {
+              links.add(fullUrl);
+            }
+          } catch (e) {}
+        }
+      });
+
+      // Convert Set to Array and limit to MAX_GAMES
+      const allLinksArray = Array.from(links);
+      return allLinksArray.slice(0, MAX_GAMES);
+    }
+
+    // --- Step 2: Extract game data from individual page ---
+    function extractGameData(doc, pageUrl) {
+      const getText = (selectors) => {
+        for (let sel of selectors) {
+          const el = doc.querySelector(sel);
+          if (el) return el.textContent.trim().replace(/\s+/g, ' ');
+        }
+        return null;
+      };
+
+      // Title
+      let title = getText(['h1', '.product-title', '.game-title', 'title']);
+      if (!title) {
+        // Extract from URL as last resort
+        const match = pageUrl.match(/\/([^\/]+?)\/?$/);
+        title = match ? match[1].replace(/-/g, ' ') : 'Unknown Title';
+      } else {
+        title = title.replace(/[|–].*$/g, '').trim();
+      }
+
+      // Release date
+      let release = getText(['.release-date', '.release', '.date', 'time', '.product-info .date']);
+      if (!release) {
+        const match = doc.body.textContent.match(/\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s+\d{4}\b/i);
+        release = match ? match[0] : 'Not Available';
+      }
+
+      // Features
+      let features = 'Not Available';
+      const featureSelectors = ['.features li', '.feature-list li', '.highlights li', '.description li', '.product-description li'];
+      for (let sel of featureSelectors) {
+        const items = doc.querySelectorAll(sel);
+        if (items.length) {
+          features = Array.from(items).map(li => li.textContent.trim()).join('; ').slice(0, 450);
+          break;
+        }
+      }
+      if (features === 'Not Available') {
+        const desc = doc.querySelector('.description, .product-description, [itemprop="description"]');
+        if (desc) features = desc.textContent.trim().slice(0, 300) + (desc.textContent.length > 300 ? '…' : '');
+      }
+
+      // Platforms
+      let platforms = getText(['.platforms', '.platform', '.game-platform', '.system', '.available-on']);
+      if (!platforms) {
+        const platSpans = doc.querySelectorAll('.platform-icon, .platform-tag, .plat');
+        if (platSpans.length) platforms = Array.from(platSpans).map(p => p.textContent.trim()).join(', ');
+        else {
+          const text = doc.body.textContent;
+          const detected = [];
+          if (text.includes('PlayStation 5') || text.includes('PS5')) detected.push('PS5');
+          if (text.includes('PlayStation 4') || text.includes('PS4')) detected.push('PS4');
+          if (text.includes('PlayStation 3') || text.includes('PS3')) detected.push('PS3');
+          if (text.includes('Switch')) detected.push('Nintendo Switch');
+          if (text.includes('Xbox')) detected.push('Xbox');
+          if (text.includes('Steam') || text.includes('PC')) detected.push('PC');
+          if (text.includes('3DS')) detected.push('Nintendo 3DS');
+          if (text.includes('Vita')) detected.push('PS Vita');
+          platforms = detected.length ? detected.join(', ') : 'Not Available';
+        }
+      }
+
+      // Developer
+      let developer = getText(['.developer', '.dev', '.developer-info']);
+      if (!developer) {
+        const body = doc.body.textContent;
+        if (body.includes('Developer: Atlus') || body.includes('Developed by Atlus')) developer = 'Atlus';
+        else if (body.includes('Vanillaware')) developer = 'Vanillaware';
+        else if (body.includes('Arc System Works')) developer = 'Arc System Works';
+        else if (body.includes('P-Studio')) developer = 'P-Studio';
+        else developer = 'Not Available';
+      }
+
+      // Publisher
+      let publisher = getText(['.publisher', '.pub', '.publisher-info']);
+      if (!publisher) {
+        const body = doc.body.textContent;
+        if (body.includes('Publisher: Atlus') || body.includes('Published by Atlus')) publisher = 'Atlus';
+        else if (body.includes('SEGA')) publisher = 'SEGA';
+        else if (body.includes('Deep Silver')) publisher = 'Deep Silver';
+        else publisher = 'Not Available';
+      }
+
+      return { title, release, features, platforms, developer, publisher, url: pageUrl };
+    }
+
+    // --- Main scrape process: discover + scrape (max 10 games) ---
+    async function scrapeTenGames() {
+      setStatus('loading', 'Starting discovery process...');
+      scrapeBtn.disabled = true;
+
+      emptyState.style.display = 'flex';
+      gamesTable.style.display = 'none';
+      exportBar.classList.remove('visible');
+      filterBar.classList.remove('visible');
+      statsRow.classList.remove('visible');
+
+      try {
+        // Step 1: Discover game links (automatically limited to MAX_GAMES)
+        const gameUrls = await discoverGameLinks();
+        
+        if (gameUrls.length === 0) {
+          throw new Error('No game links found on the listing page.');
+        }
+
+        setStatus('loading', `Found ${gameUrls.length} games. Starting detailed scrape...`);
+
+        // Step 2: Scrape each game page
+        const results = [];
+        const parser = new DOMParser();
+
+        for (let i = 0; i < gameUrls.length; i++) {
+          const url = gameUrls[i];
+          setStatus('loading', `(${i+1}/${gameUrls.length}) scraping game...`);
+
+          try {
+            const html = await fetchWithFallback(url, () => {});
+            const doc = parser.parseFromString(html, 'text/html');
+            const gameData = extractGameData(doc, url);
+            results.push(gameData);
+            // Be gentle with the server
+            await new Promise(r => setTimeout(r, 300));
+          } catch (err) {
+            console.warn(`Failed to scrape ${url}:`, err);
+            results.push({
+              title: `Unknown Game (${i+1})`,
+              release: 'Not Available',
+              features: 'Not Available',
+              platforms: 'Not Available',
+              developer: 'Not Available',
+              publisher: 'Not Available',
+              url: url
+            });
+          }
+        }
+
+        allGames = results;
+
+        // Update stats
+        const totalFields = allGames.reduce((acc, g) => {
+          return acc + [g.title, g.release, g.features, g.platforms, g.developer, g.publisher]
+            .filter(v => v && v !== 'Not Available').length;
+        }, 0);
+
+        statTotal.textContent = allGames.length;
+        statFields.textContent = totalFields;
+        statDev.textContent = allGames.filter(g => g.developer !== 'Not Available').length;
+
+        statsRow.classList.add('visible');
+        filterBar.classList.add('visible');
+        exportBar.classList.add('visible');
+
+        searchInput.value = '';
+        sortKey = 'title'; sortDir = 'asc';
+        updateSortHeaders();
+        renderTable();
+
+        setStatus('done', `✓ Successfully scraped ${allGames.length} games from Atlus.`);
+        emptyState.style.display = 'none';
+        gamesTable.style.display = 'table';
+
+      } catch (err) {
+        setStatus('error', `❌ ${err.message}`);
+        console.error(err);
+      } finally {
+        scrapeBtn.disabled = false;
+      }
+    }
+
+    // --- Render table ---
+    function renderTable() {
+      const query = searchInput.value.toLowerCase();
+
+      let rows = allGames.filter(g => {
+        if (!query) return true;
+        return g.title.toLowerCase().includes(query) ||
+               g.features.toLowerCase().includes(query) ||
+               g.platforms.toLowerCase().includes(query);
+      });
+
+      rows.sort((a, b) => {
+        let av = a[sortKey], bv = b[sortKey];
+        if (typeof av === 'string') av = av.toLowerCase();
+        if (typeof bv === 'string') bv = bv.toLowerCase();
+        if (av < bv) return sortDir === 'asc' ? -1 : 1;
+        if (av > bv) return sortDir === 'asc' ? 1 : -1;
+        return 0;
+      });
+
+      resultCount.textContent = `${rows.length} / ${allGames.length} GAMES`;
+
+      if (rows.length === 0 && allGames.length > 0) {
+        tableBody.innerHTML = '';
+        gamesTable.style.display = 'none';
+        emptyState.style.display = 'flex';
+        emptyState.querySelector('p').textContent = 'No games match filters.';
+        return;
+      }
+
+      tableBody.innerHTML = rows.map((g, i) => {
+        const featureHtml = g.features !== 'Not Available'
+          ? `<ul class="atlus-features-list">${g.features.split(';').map(f => `<li>${escapeHtml(f.trim())}</li>`).join('').slice(0,500)}</ul>`
+          : '<span class="atlus-na">Not Available</span>';
+
+        const platformHtml = g.platforms !== 'Not Available'
+          ? g.platforms.split(',').map(p => `<span class="atlus-platform-badge">${escapeHtml(p.trim())}</span>`).join(' ')
+          : '<span class="atlus-na">Not Available</span>';
+
+        return `
+          <tr>
+            <td class="atlus-title-cell">
+              <a href="${g.url}" target="_blank" rel="noopener" title="Open official page">
+                ${escapeHtml(g.title)}
+              </a>
+            </td>
+            <td>${escapeHtml(g.release)}</td>
+            <td class="atlus-features-cell">${featureHtml}</td>
+            <td>${platformHtml}</td>
+            <td>${escapeHtml(g.developer)}</td>
+            <td>${escapeHtml(g.publisher)}</td>
+          </tr>`;
+      }).join('');
+
+      gamesTable.style.display = 'table';
+      emptyState.style.display = 'none';
+    }
+
+    // --- Sorting ---
+    window.sortGames = function(key) {
+      if (sortKey === key) {
+        sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        sortKey = key;
+        sortDir = 'asc';
+      }
+      updateSortHeaders();
+      renderTable();
+    };
+
+    function updateSortHeaders() {
+      ['title','release','platforms','developer','publisher'].forEach(k => {
+        const th = document.getElementById(`th-${k}`);
+        if (th) th.className = k === sortKey ? sortDir : '';
+      });
+    }
+
+    // --- Export ---
+    exportCsv.addEventListener('click', () => {
+      const header = ['Title', 'Release Date', 'Key Features', 'Platforms', 'Developer', 'Publisher'];
+      const rows = allGames.map(g => [
+        `"${g.title.replace(/"/g, '""')}"`,
+        `"${g.release.replace(/"/g, '""')}"`,
+        `"${g.features.replace(/"/g, '""')}"`,
+        `"${g.platforms.replace(/"/g, '""')}"`,
+        `"${g.developer.replace(/"/g, '""')}"`,
+        `"${g.publisher.replace(/"/g, '""')}"`
+      ].join(','));
+      const csv = [header.join(','), ...rows].join('\n');
+      downloadFile(csv, 'atlus_games.csv', 'text/csv');
+    });
+
+    exportJson.addEventListener('click', () => {
+      const exportData = allGames.map(({ url, ...rest }) => rest);
+      downloadFile(JSON.stringify(exportData, null, 2), 'atlus_games.json', 'application/json');
+    });
+
+    function downloadFile(content, filename, type) {
+      const blob = new Blob([content], { type });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    // --- Event listeners ---
+    scrapeBtn.addEventListener('click', scrapeTenGames);
+    searchInput.addEventListener('input', renderTable);
+
+    // No auto-run - user must click button
+  </script>
+</body>
+</html>
