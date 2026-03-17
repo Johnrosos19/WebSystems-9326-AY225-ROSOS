@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeeksforGeeks Web Dev Search Scraper | Academic Project</title>
+    <style>
+        /* ===== WEB DEVELOPMENT THEME - OFFLINE FIRST ===== */
+        /* Using only system fonts that work without internet */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Consolas', 'Monaco', 'Menlo', 'Courier New', monospace;
+            background: #1e1e1e;
+            min-height: 100vh;
+            padding: 20px;
+            color: #d4d4d4;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #252526;
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            border: 1px solid #3e3e42;
+        }
+
+        /* ===== HEADER - VS Code Title Bar Style ===== */
+        .header {
+            background: #2d2d30;
+            color: #cccccc;
+            padding: 20px 30px;
+            text-align: center;
+            border-bottom: 3px solid #007acc;
+            position: relative;
+        }
+
+        .header::before {
+            content: "WEB DEVELOPMENT SCRAPER";
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.8em;
+            color: #6a9955;
+            letter-spacing: 1px;
+            font-weight: 300;
+            font-family: 'Segoe UI', 'Consolas', monospace;
+        }
+
+        .header::after {
+            content: "●●●";
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2em;
+            color: #3e3e42;
+            letter-spacing: 5px;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #ffffff;
+            text-shadow: 0 2px 0 #000000;
+            font-family: 'Segoe UI', 'Consolas', monospace;
+        }
+
+        .header h1 span {
+            color: #007acc;
+        }
+
+        .header p {
+            opacity: 0.8;
+            font-size: 0.9em;
+            color: #9cdcfe;
+            font-family: 'Segoe UI', 'Consolas', monospace;
+        }
+
+        .student-badge {
+            background: #2a2d2e;
+            color: #6a9955;
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 20px;
+            margin-top: 10px;
+            font-weight: 400;
+            font-size: 0.9em;
+            border: 1px solid #3e3e42;
+            font-family: 'Segoe UI', 'Consolas', monospace;
+        }
+
+        .student-badge::before {
+            content: "👨‍💻 ";
+            color: #dcdcaa;
+        }
+
+        /* ===== MAIN CONTENT - Editor Area ===== */
+        .main-content {
+            padding: 30px;
+            background: #1e1e1e;
+        }
+
+        /* ===== CONTROL PANEL - Sidebar Style ===== */
+        .control-panel {
+            background: #252526;
+            border-radius: 6px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid #3e3e42;
+            box-shadow: inset 0 1px 0 #3e3e42;
+        }
+
+        .url-section {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .url-section input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 1px solid #3e3e42;
+            border-radius: 4px;
+            font-size: 0.95em;
+            min-width: 300px;
+            transition: all 0.2s;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+
+        .url-section input:focus {
+            outline: none;
+            border-color: #007acc;
+            box-shadow: 0 0 0 1px #007acc;
+            background: #1e1e1e;
+        }
+
+        .url-section input::placeholder {
+            color: #6a6a6a;
+            font-style: italic;
+        }
+
+        /* ===== BUTTONS - VS Code Button Style ===== */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            font-family: 'Segoe UI', 'Consolas', monospace;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background: #0e639c;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #1177bb;
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #3e3e42;
+            color: #cccccc;
+            border-color: #4e4e52;
+        }
+
+        .btn-secondary:hover {
+            background: #4e4e52;
+            color: #ffffff;
+        }
+
+        .btn-success {
+            background: #107c10;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #189018;
+        }
+
+        .btn-info {
+            background: #4e4e52;
+            color: #9cdcfe;
+        }
+
+        .btn-info:hover {
+            background: #5e5e62;
+            color: #c0e0ff;
+        }
+
+        .btn-warning {
+            background: #8a6e3c;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #9a7e4c;
+        }
+
+        /* ===== STATUS BAR - Output Panel Style ===== */
+        .status-bar {
+            background: #007acc;
+            border-radius: 4px;
+            padding: 12px 20px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.3s ease;
+            color: #ffffff;
+            font-family: 'Segoe UI', 'Consolas', monospace;
+            font-size: 0.9em;
+            border-left: 4px solid #ffffff;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .status-bar.success {
+            background: #107c10;
+        }
+
+        .status-bar.error {
+            background: #a12626;
+        }
+
+        .status-bar.warning {
+            background: #8a6e3c;
+        }
+
+        .status-bar.info {
+            background: #007acc;
+        }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #ffffff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== PROGRESS - Build Progress Style ===== */
+        .progress-container {
+            background: #1e1e1e;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #3e3e42;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #3e3e42;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #007acc;
+            transition: width 0.3s ease;
+            border-radius: 4px;
+            box-shadow: 0 0 10px #007acc;
+        }
+
+        /* ===== STATS CARDS - Metric Cards Style ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: #2d2d30;
+            color: #cccccc;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid #3e3e42;
+            transition: all 0.2s;
+        }
+
+        .stat-card:hover {
+            border-color: #007acc;
+            box-shadow: 0 0 20px rgba(0, 122, 204, 0.2);
+        }
+
+        .stat-card h3 {
+            font-size: 2.5em;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #4ec9b0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+
+        .stat-card p {
+            color: #9cdcfe;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Segoe UI', 'Consolas', monospace;
+        }
+
+        /* ===== FILTERS - Search/Filter Style ===== */
+        .filter-section {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-section input,
+        .filter-section select {
+            padding: 10px 15px;
+            border: 1px solid #3e3e42;
+            border-radius: 4px;
+            font-size: 0.95em;
+            flex: 1;
+            min-width: 200px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            font-family: 'Segoe UI', 'Consolas', monospace;
+        }
+
+        .filter-section input:focus,
+        .filter-section select:focus {
+            outline: none;
+            border-color: #007acc;
+        }
+
+        .filter-section select {
+            cursor: pointer;
+            background: #2d2d30;
+        }
+
+        /* ===== TOPIC CARDS - Code File Cards ===== */
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .topic-card {
+            background: #2d2d30;
+            border: 1px solid #3e3e42;
+            border-radius: 6px;
+            padding: 20px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .topic-card:hover {
+            border-color: #007acc;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        .topic-card::before {
+            content: "📄";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2em;
+            opacity: 0.5;
+        }
+
+        .topic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            gap: 10px;
+            padding-right: 25px;
+        }
+
+        .topic-title {
+            font-size: 1.1em;
+            font-weight: 500;
+            color: #9cdcfe;
+            line-height: 1.4;
+            flex: 1;
+            font-family: 'Segoe UI', 'Consolas', monospace;
+        }
+
+        .difficulty-badge {
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-size: 0.7em;
+            font-weight: 500;
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+
+        .difficulty-easy {
+            background: #107c10;
+            color: #ffffff;
+        }
+
+        .difficulty-medium {
+            background: #8a6e3c;
+            color: #ffffff;
+        }
+
+        .difficulty-hard {
+            background: #a12626;
+            color: #ffffff;
+        }
+
+        .concepts-section {
+            margin: 15px 0;
+            padding: 12px;
+            background: #1e1e1e;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #ce9178;
+            border-left: 3px solid #007acc;
+            font-family: 'Segoe UI', 'Consolas', monospace;
+        }
+
+        .concepts-section strong {
+            color: #4ec9b0;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.95em;
+        }
+
+        .concepts-section div {
+            color: #d4d4d4;
+        }
+
+        .code-preview {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.85em;
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #3e3e42;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .code-preview pre {
+            margin: 0;
+            color: #ce9178;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+
+        .complexity-box {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .complexity-item {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            background: #1e1e1e;
+            border-radius: 4px;
+            border: 1px solid #3e3e42;
+            font-size: 0.85em;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+
+        .complexity-item strong {
+            color: #4ec9b0;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .complexity-item:first-child {
+            color: #dcdcaa;
+        }
+
+        .complexity-item:last-child {
+            color: #9cdcfe;
+        }
+
+        .references-section {
+            margin: 15px 0;
+            padding: 12px;
+            background: #1e1e1e;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-family: 'Segoe UI', 'Consolas', monospace;
+        }
+
+        .references-section strong {
+            color: #4ec9b0;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .reference-link {
+            color: #9cdcfe;
+            text-decoration: none;
+            display: block;
+            margin: 5px 0;
+            font-size: 0.85em;
+            word-break: break-all;
+            transition: color 0.2s;
+            padding: 3px 8px;
+            background: #2d2d30;
+            border-radius: 3px;
+            border: 1px solid #3e3e42;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+
+        .reference-link:hover {
+            color: #ffffff;
+            background: #007acc;
+            border-color: #007acc;
+            text-decoration: none;
+        }
+
+        .topic-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #3e3e42;
+        }
+
+        .topic-footer span {
+            color: #6a6a6a;
+            font-size: 0.8em;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+
+        /* ===== TABS - Editor Tabs Style ===== */
+        .tab-container {
+            display: flex;
+            gap: 2px;
+            margin: 20px 0;
+            background: #2d2d30;
+            padding: 4px;
+            border-radius: 4px;
+            border: 1px solid #3e3e42;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            background: transparent;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: 500;
+            color: #969696;
+            transition: all 0.2s;
+            font-size: 0.9em;
+            font-family: 'Segoe UI', 'Consolas', monospace;
+        }
+
+        .tab.active {
+            background: #007acc;
+            color: white;
+        }
+
+        .tab:hover:not(.active) {
+            background: #3e3e42;
+            color: #d4d4d4;
+        }
+
+        /* ===== ACTION BUTTONS - Toolbar Style ===== */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            padding: 15px;
+            background: #252526;
+            border-radius: 4px;
+            border: 1px solid #3e3e42;
+        }
+
+        /* ===== FOOTER - Status Bar Style ===== */
+        .footer {
+            background: #007acc;
+            color: #ffffff;
+            text-align: center;
+            padding: 12px;
+            font-size: 0.85em;
+            border-top: 1px solid #1e1e1e;
+            font-family: 'Segoe UI', 'Consolas', monospace;
+        }
+
+        .footer p:first-child {
+            color: #ffffff;
+        }
+
+        .footer p:last-child {
+            color: #c0e0ff;
+            font-size: 0.8em;
+        }
+
+        /* ===== EMPTY STATE ===== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 40px;
+            color: #6a6a6a;
+            background: #252526;
+            border-radius: 6px;
+            border: 2px dashed #3e3e42;
+        }
+
+        .empty-state h2 {
+            color: #9cdcfe;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            font-weight: 400;
+            font-family: 'Segoe UI', 'Consolas', monospace;
+        }
+
+        .empty-state p {
+            color: #969696;
+            margin-bottom: 20px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+
+        .feature-list {
+            display: inline-block;
+            text-align: left;
+            margin: 20px auto;
+            background: #1e1e1e;
+            padding: 20px 40px;
+            border-radius: 4px;
+            border: 1px solid #3e3e42;
+        }
+
+        .feature-list li {
+            margin: 8px 0;
+            color: #ce9178;
+            list-style-type: none;
+            padding-left: 25px;
+            position: relative;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            color: #6a9955;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* ===== DATA PREVIEW - JSON Viewer ===== */
+        .data-preview {
+            background: #1e1e1e;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px 0;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #3e3e42;
+        }
+
+        .json-viewer {
+            background: #1e1e1e;
+            color: #ce9178;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.85em;
+            white-space: pre-wrap;
+            word-break: break-word;
+            border: 1px solid #3e3e42;
+        }
+
+        /* ===== SCROLLBAR - VS Code Style ===== */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1e1e1e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3e3e42;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #007acc;
+        }
+
+        ::-webkit-scrollbar-corner {
+            background: #1e1e1e;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            
+            .header { padding: 15px; }
+            .header::before { display: none; }
+            .header::after { display: none; }
+            .header h1 { font-size: 1.5em; }
+            
+            .topics-grid { grid-template-columns: 1fr; }
+            .url-section { flex-direction: column; }
+            .action-buttons { flex-direction: column; }
+            .btn { width: 100%; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .tab-container { flex-direction: column; }
+        }
+
+        /* Syntax Highlighting Colors */
+        .text-blue { color: #9cdcfe; }
+        .text-green { color: #6a9955; }
+        .text-orange { color: #ce9178; }
+        .text-yellow { color: #dcdcaa; }
+        .text-purple { color: #c586c0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>GeeksforGeeks <span>Web Dev</span> Scraper</h1>
+            <p>// Automated Learning Material Generator</p>
+            <div class="student-badge">
+                John Wilfred G. Rosos | Academic Project
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Control Panel -->
+            <div class="control-panel">
+                <div class="url-section">
+                    <input type="url" id="urlInput" value="https://www.geeksforgeeks.org/search/?gq=web+development" placeholder="$ enter search url..." readonly>
+                    <button class="btn btn-primary" id="scrapeBtn">
+                        <span>⚡</span> run scraper
+                    </button>
+                </div>
+
+                <!-- Status Display -->
+                <div id="status" class="status-bar info" style="display: none;"></div>
+
+                <!-- Progress Section -->
+                <div id="progressSection" style="display: none;">
+                    <div class="progress-container">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; color: #969696; font-family: 'Consolas', monospace;">
+                            <span>>_ scraping progress</span>
+                            <span><span id="completedCount">0</span>/<span id="totalCount">10</span></span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+                        </div>
+                        <div id="currentTopic" style="margin-top: 10px; color: #9cdcfe; font-family: 'Consolas', monospace;"></div>
+                    </div>
+                </div>
+
+                <!-- Statistics Section -->
+                <div id="statsSection" style="display: none;">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3 id="statTotal">0</h3>
+                            <p>articles</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3 id="statWithCode">0</h3>
+                            <p>with code</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3 id="statWithComplexity">0</h3>
+                            <p>complexity</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3 id="statWithRefs">0</h3>
+                            <p>references</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter Section -->
+                <div id="filterSection" style="display: none;">
+                    <div class="filter-section">
+                        <input type="text" id="searchFilter" placeholder="🔍 grep search...">
+                        <select id="difficultyFilter">
+                            <option value="">$ difficulty --all</option>
+                            <option value="Easy">easy</option>
+                            <option value="Medium">medium</option>
+                            <option value="Hard">hard</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div id="viewTabs" class="tab-container" style="display: none;">
+                    <button class="tab active" id="cardViewTab">📊 card view</button>
+                    <button class="tab" id="previewTab">📋 data preview</button>
+                </div>
+
+                <!-- Content Section -->
+                <div id="contentSection"></div>
+
+                <!-- Action Buttons -->
+                <div id="actionSection" style="display: none;">
+                    <div class="action-buttons">
+                        <button class="btn btn-secondary" id="saveJsonBtn">
+                            <span>💾</span> save
+                        </button>
+                        <button class="btn btn-info" id="loadJsonBtn">
+                            <span>📂</span> load
+                        </button>
+                        <button class="btn btn-success" id="generatePdfBtn">
+                            <span>📄</span> generate pdf
+                        </button>
+                        <button class="btn btn-warning" id="exportJsonBtn">
+                            <span>📥</span> export json
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state">
+                <h2>$ ./scrape-web-dev</h2>
+                <p>Click "run scraper" to extract articles from search results</p>
+                <div class="feature-list">
+                    <ul>
+                        <li>zero hardcoded data</li>
+                        <li>dynamic api + html parsing</li>
+                        <li>extracts: titles, difficulty, concepts, code, complexity, references</li>
+                        <li>generates pdf learning material</li>
+                        <li>local storage support</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>gfg-web-dev-scraper v1.0.0 | academic project</p>
+            <p style="font-size: 0.8em;">[all content dynamically fetched]</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        // ==================== JAVASCRIPT (unchanged - working perfectly) ====================
+        (function() {
+            const CONFIG = {
+                targetUrl: 'https://www.geeksforgeeks.org/search/?gq=web+development',
+                apiUrl: 'https://www.geeksforgeeks.org/wp-json/wp/v2/posts?search=web+development&per_page=15',
+                minTopics: 10,
+                requestDelay: 1000,
+                storageKey: 'gfg_webdev_search_data',
+                studentName: 'John Wilfred G.',
+                proxyList: [
+                    { name: 'corsproxy.io', url: (t) => `https://corsproxy.io/?${encodeURIComponent(t)}` },
+                    { name: 'api.allorigins.win', url: (t) => `https://api.allorigins.win/get?url=${encodeURIComponent(t)}`, extract: async (r) => (await r.json()).contents }
+                ]
+            };
+
+            let scrapedTopics = [];
+            let filteredTopics = [];
+            let isScraping = false;
+            let activeTab = 'card';
+
+            try {
+                const saved = localStorage.getItem(CONFIG.storageKey);
+                if (saved) {
+                    scrapedTopics = JSON.parse(saved);
+                    filteredTopics = [...scrapedTopics];
+                    if (scrapedTopics.length > 0) {
+                        updateUIAfterScrape();
+                    }
+                }
+            } catch (e) {}
+
+            const elements = {
+                urlInput: document.getElementById('urlInput'),
+                scrapeBtn: document.getElementById('scrapeBtn'),
+                status: document.getElementById('status'),
+                progressSection: document.getElementById('progressSection'),
+                statsSection: document.getElementById('statsSection'),
+                filterSection: document.getElementById('filterSection'),
+                viewTabs: document.getElementById('viewTabs'),
+                contentSection: document.getElementById('contentSection'),
+                actionSection: document.getElementById('actionSection'),
+                emptyState: document.getElementById('emptyState'),
+                completedCount: document.getElementById('completedCount'),
+                totalCount: document.getElementById('totalCount'),
+                progressFill: document.getElementById('progressFill'),
+                currentTopic: document.getElementById('currentTopic'),
+                statTotal: document.getElementById('statTotal'),
+                statWithCode: document.getElementById('statWithCode'),
+                statWithComplexity: document.getElementById('statWithComplexity'),
+                statWithRefs: document.getElementById('statWithRefs'),
+                searchFilter: document.getElementById('searchFilter'),
+                difficultyFilter: document.getElementById('difficultyFilter'),
+                cardViewTab: document.getElementById('cardViewTab'),
+                previewTab: document.getElementById('previewTab'),
+                saveJsonBtn: document.getElementById('saveJsonBtn'),
+                loadJsonBtn: document.getElementById('loadJsonBtn'),
+                generatePdfBtn: document.getElementById('generatePdfBtn'),
+                exportJsonBtn: document.getElementById('exportJsonBtn')
+            };
+
+            function setStatus(type, message, duration = 5000) {
+                elements.status.style.display = 'flex';
+                elements.status.className = `status-bar ${type}`;
+                elements.status.innerHTML = type === 'loading' ? 
+                    `<div class="spinner"></div> ${message}` : message;
+                if (type !== 'loading') setTimeout(() => elements.status.style.display = 'none', duration);
+            }
+
+            function escapeHtml(text) {
+                if (!text) return '';
+                return String(text).replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
+            }
+
+            async function fetchWithProxy(url) {
+                for (const proxy of CONFIG.proxyList) {
+                    try {
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), 15000);
+                        const response = await fetch(proxy.url(url), { signal: controller.signal });
+                        clearTimeout(timeoutId);
+                        if (!response.ok) continue;
+                        if (proxy.extract) return await proxy.extract(response);
+                        return await response.text();
+                    } catch (e) {}
+                }
+                throw new Error('All proxies failed');
+            }
+
+            async function fetchFromGfGApi() {
+                try {
+                    const apiUrl = 'https://www.geeksforgeeks.org/wp-json/wp/v2/posts?search=web+development&per_page=15';
+                    const response = await fetchWithProxy(apiUrl);
+                    if (response) {
+                        const posts = JSON.parse(response);
+                        return posts.map(post => ({
+                            url: post.link,
+                            title: post.title.rendered.replace(/<[^>]*>/g, '').trim(),
+                            date: post.date
+                        }));
+                    }
+                } catch (e) {}
+                return [];
+            }
+
+            async function extractArticleLinks(html) {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const articles = [];
+                const seenUrls = new Set();
+                
+                const searchResultSelectors = [
+                    'article a', '.search-result a', '.result a', '.gs-title a',
+                    'h3 a', 'h4 a', '.head a', 'a[href*=".php"]'
+                ];
+                
+                searchResultSelectors.forEach(selector => {
+                    doc.querySelectorAll(selector).forEach(link => {
+                        const href = link.href || link.getAttribute('href');
+                        const title = link.textContent?.trim() || '';
+                        
+                        if (!href || !title || title.length < 10) return;
+                        if (!href.includes('geeksforgeeks.org') && !href.startsWith('/')) return;
+                        
+                        const excludeTerms = ['login', 'signup', 'register', 'forum', 'course', 'practice', 
+                            'problem', 'contest', 'job', 'interview', 'tag', 'category', 'author', 
+                            'page', 'comment', 'search', 'about', 'privacy', 'policy', 'terms', 
+                            'contact', 'careers'];
+                        
+                        let shouldExclude = false;
+                        for (const term of excludeTerms) {
+                            if (href.toLowerCase().includes(term) || title.toLowerCase().includes(term)) {
+                                shouldExclude = true;
+                                break;
+                            }
+                        }
+                        
+                        if (shouldExclude) return;
+                        
+                        if (href.includes('.php') || (href.match(/\//g)?.length >= 3)) {
+                            const fullUrl = href.startsWith('http') ? href : 
+                                `https://www.geeksforgeeks.org${href.startsWith('/') ? href : '/' + href}`;
+                            
+                            if (!seenUrls.has(fullUrl)) {
+                                seenUrls.add(fullUrl);
+                                articles.push({ url: fullUrl, title });
+                            }
+                        }
+                    });
+                });
+                
+                return articles.slice(0, CONFIG.minTopics);
+            }
+
+            async function getWebDevArticles() {
+                setStatus('loading', 'fetching articles from search results...');
+                
+                try {
+                    const apiArticles = await fetchFromGfGApi();
+                    if (apiArticles.length >= CONFIG.minTopics) {
+                        return apiArticles.slice(0, CONFIG.minTopics);
+                    }
+                    
+                    const searchHtml = await fetchWithProxy(CONFIG.targetUrl);
+                    const htmlArticles = await extractArticleLinks(searchHtml);
+                    
+                    if (htmlArticles.length > 0) {
+                        return htmlArticles.slice(0, CONFIG.minTopics);
+                    }
+                    
+                    throw new Error('No articles found');
+                } catch (error) {
+                    throw new Error('Unable to fetch articles');
+                }
+            }
+
+            function extractDifficulty(html, title) {
+                const lowerHtml = html.toLowerCase();
+                const lowerTitle = title.toLowerCase();
+                
+                if (lowerHtml.includes('difficulty: easy') || lowerHtml.includes('beginner')) return 'Easy';
+                if (lowerHtml.includes('difficulty: medium') || lowerHtml.includes('intermediate')) return 'Medium';
+                if (lowerHtml.includes('difficulty: hard') || lowerHtml.includes('advanced')) return 'Hard';
+                if (lowerTitle.includes('beginner') || lowerTitle.includes('basics')) return 'Easy';
+                if (lowerTitle.includes('advanced')) return 'Hard';
+                return 'Medium';
+            }
+
+            function extractConcepts(html) {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const concepts = [];
+                
+                const selectors = ['h2', 'h3', 'strong', 'b', 'article p', '.entry-content p', '.text p', 'main p'];
+                
+                selectors.forEach(selector => {
+                    doc.querySelectorAll(selector).forEach(el => {
+                        const text = el.textContent.trim();
+                        if (text.length > 60 && text.length < 400 && !text.includes('cookie') && !text.includes('privacy')) {
+                            concepts.push(text);
+                        }
+                    });
+                });
+                
+                if (concepts.length === 0) {
+                    doc.querySelectorAll('p').forEach(p => {
+                        const text = p.textContent.trim();
+                        if (text.length > 100 && text.length < 500 && !text.includes('cookie') && !text.includes('privacy')) {
+                            concepts.push(text);
+                        }
+                    });
+                }
+                
+                return concepts.length > 0 ? concepts.slice(0, 2) : ['Key concepts available in the full article.'];
+            }
+
+            function extractCodeSnippets(html) {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const codes = [];
+                
+                const selectors = ['pre code', 'pre', 'code', '.code-block', '.highlight', '.syntaxhighlighter'];
+                
+                selectors.forEach(selector => {
+                    doc.querySelectorAll(selector).forEach(el => {
+                        const code = el.textContent.trim();
+                        if (code.length > 30 && code.length < 3000 && 
+                            (code.includes('{') || code.includes('function') || code.includes('var ') || 
+                             code.includes('let ') || code.includes('const ') || code.includes('=>'))) {
+                            codes.push(code);
+                        }
+                    });
+                });
+                
+                return codes.slice(0, 2);
+            }
+
+            function extractComplexity(html) {
+                let time = 'Not Available', space = 'Not Available';
+                
+                const timeMatch = html.match(/time complexity[:\s]*([^.\n]+)/i);
+                if (timeMatch) time = timeMatch[1].trim().substring(0, 50);
+                
+                const spaceMatch = html.match(/space complexity[:\s]*([^.\n]+)/i);
+                if (spaceMatch) space = spaceMatch[1].trim().substring(0, 50);
+                
+                return { timeComplexity: time, spaceComplexity: space };
+            }
+
+            function extractReferences(html, currentUrl) {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const refs = [];
+                const seen = new Set();
+                
+                const refSelectors = ['.references a', '.ref a', '.related a', 'aside a', '.sidebar a', '.also-read a'];
+                
+                refSelectors.forEach(selector => {
+                    doc.querySelectorAll(selector).forEach(link => {
+                        const href = link.href;
+                        const text = link.textContent.trim();
+                        
+                        if (href && text && href !== currentUrl && !seen.has(href) && 
+                            href.includes('geeksforgeeks.org') && !href.includes('login') && !href.includes('signup')) {
+                            seen.add(href);
+                            refs.push({ title: text.substring(0, 50), url: href });
+                        }
+                    });
+                });
+                
+                return refs.slice(0, 3);
+            }
+
+            async function scrapeArticle(articleInfo, index, total) {
+                elements.currentTopic.textContent = `>_ scraping ${index}/${total}: ${articleInfo.title.substring(0, 50)}`;
+                
+                try {
+                    const html = await fetchWithProxy(articleInfo.url);
+                    return {
+                        id: `article-${Date.now()}-${index}`,
+                        title: articleInfo.title,
+                        url: articleInfo.url,
+                        difficulty: extractDifficulty(html, articleInfo.title),
+                        concepts: extractConcepts(html),
+                        codeSnippets: extractCodeSnippets(html),
+                        ...extractComplexity(html),
+                        references: extractReferences(html, articleInfo.url),
+                        dateGenerated: new Date().toISOString()
+                    };
+                } catch (error) {
+                    return {
+                        id: `article-${Date.now()}-${index}`,
+                        title: articleInfo.title,
+                        url: articleInfo.url,
+                        difficulty: 'Not Available',
+                        concepts: ['⚠️ Failed to load content'],
+                        codeSnippets: [],
+                        timeComplexity: 'Not Available',
+                        spaceComplexity: 'Not Available',
+                        references: [],
+                        dateGenerated: new Date().toISOString(),
+                        error: true
+                    };
+                }
+            }
+
+            async function startScraping() {
+                if (isScraping) return;
+                
+                isScraping = true;
+                elements.scrapeBtn.disabled = true;
+                
+                elements.emptyState.style.display = 'none';
+                elements.progressSection.style.display = 'block';
+                elements.statsSection.style.display = 'none';
+                elements.filterSection.style.display = 'none';
+                elements.viewTabs.style.display = 'none';
+                elements.contentSection.innerHTML = '';
+                elements.actionSection.style.display = 'none';
+                
+                try {
+                    const articles = await getWebDevArticles();
+                    
+                    if (articles.length === 0) throw new Error('No articles found');
+                    
+                    const topicsToScrape = articles.slice(0, CONFIG.minTopics);
+                    elements.totalCount.textContent = topicsToScrape.length;
+                    setStatus('loading', `found ${articles.length} articles. scraping ${topicsToScrape.length}...`);
+                    
+                    const scraped = [];
+                    for (let i = 0; i < topicsToScrape.length; i++) {
+                        const article = await scrapeArticle(topicsToScrape[i], i + 1, topicsToScrape.length);
+                        scraped.push(article);
+                        
+                        elements.completedCount.textContent = i + 1;
+                        elements.progressFill.style.width = `${((i + 1) / topicsToScrape.length) * 100}%`;
+                        
+                        await new Promise(r => setTimeout(r, CONFIG.requestDelay));
+                    }
+                    
+                    scrapedTopics = scraped;
+                    filteredTopics = [...scrapedTopics];
+                    
+                    localStorage.setItem(CONFIG.storageKey, JSON.stringify(scrapedTopics));
+                    
+                    updateUIAfterScrape();
+                    
+                    setStatus('success', `✅ scraped ${scrapedTopics.length} articles!`);
+                    
+                } catch (error) {
+                    setStatus('error', `❌ error: ${error.message}`);
+                    elements.emptyState.style.display = 'block';
+                } finally {
+                    isScraping = false;
+                    elements.scrapeBtn.disabled = false;
+                    elements.progressSection.style.display = 'none';
+                }
+            }
+
+            function updateUIAfterScrape() {
+                elements.statTotal.textContent = scrapedTopics.length;
+                elements.statWithCode.textContent = scrapedTopics.filter(t => t.codeSnippets.length > 0).length;
+                elements.statWithComplexity.textContent = scrapedTopics.filter(t => !t.timeComplexity.includes('Not Available')).length;
+                elements.statWithRefs.textContent = scrapedTopics.filter(t => t.references.length > 0).length;
+                
+                elements.statsSection.style.display = 'block';
+                elements.filterSection.style.display = 'block';
+                elements.viewTabs.style.display = 'flex';
+                elements.actionSection.style.display = 'block';
+                
+                renderCardView();
+            }
+
+            function renderCardView() {
+                if (filteredTopics.length === 0) {
+                    elements.contentSection.innerHTML = '<div class="empty-state">no matching topics found</div>';
+                    return;
+                }
+                
+                let html = '<div class="topics-grid">';
+                
+                filteredTopics.forEach(topic => {
+                    const codeHtml = topic.codeSnippets.length > 0 ? 
+                        `<div class="code-preview"><pre>${escapeHtml(topic.codeSnippets[0].substring(0, 300))}${topic.codeSnippets[0].length > 300 ? '\n// ...' : ''}</pre></div>` : 
+                        '<div class="code-preview" style="color: #6a6a6a;">// no code example</div>';
+                    
+                    const conceptsHtml = topic.concepts.map(c => 
+                        `<div>• ${escapeHtml(c.substring(0, 150))}${c.length > 150 ? '...' : ''}</div>`
+                    ).join('');
+                    
+                    const refsHtml = topic.references.length > 0 ?
+                        `<div class="references-section"><strong>📚 references:</strong>${
+                            topic.references.map(r => `<a href="${escapeHtml(r.url)}" target="_blank" class="reference-link">🔗 ${escapeHtml(r.title)}</a>`).join('')
+                        }</div>` : '';
+                    
+                    html += `
+                        <div class="topic-card">
+                            <div class="topic-header">
+                                <span class="topic-title">${escapeHtml(topic.title)}</span>
+                                <span class="difficulty-badge difficulty-${topic.difficulty.toLowerCase()}">${topic.difficulty}</span>
+                            </div>
+                            
+                            <div class="concepts-section">
+                                <strong>📝 key concepts</strong>
+                                ${conceptsHtml}
+                            </div>
+                            
+                            <div class="complexity-box">
+                                <div class="complexity-item"><strong>time</strong><br>${escapeHtml(topic.timeComplexity.substring(0, 30))}</div>
+                                <div class="complexity-item"><strong>space</strong><br>${escapeHtml(topic.spaceComplexity.substring(0, 30))}</div>
+                            </div>
+                            
+                            ${codeHtml}
+                            ${refsHtml}
+                            
+                            <div class="topic-footer">
+                                <span>📅 ${new Date(topic.dateGenerated).toLocaleDateString()}</span>
+                                <a href="${escapeHtml(topic.url)}" target="_blank" class="btn btn-secondary" style="padding: 4px 12px;">view →</a>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                elements.contentSection.innerHTML = html;
+            }
+
+            function renderDataPreview() {
+                const previewData = filteredTopics.map(t => ({
+                    title: t.title,
+                    difficulty: t.difficulty,
+                    concepts: t.concepts.length,
+                    codeSnippets: t.codeSnippets.length,
+                    timeComplexity: t.timeComplexity,
+                    spaceComplexity: t.spaceComplexity,
+                    references: t.references.length
+                }));
+                
+                elements.contentSection.innerHTML = `
+                    <div class="data-preview">
+                        <div class="json-viewer">${escapeHtml(JSON.stringify(previewData, null, 2))}</div>
+                    </div>
+                `;
+            }
+
+            function filterTopics() {
+                const search = elements.searchFilter.value.toLowerCase();
+                const difficulty = elements.difficultyFilter.value;
+                
+                filteredTopics = scrapedTopics.filter(t => {
+                    if (search && !`${t.title} ${t.concepts.join(' ')}`.toLowerCase().includes(search)) return false;
+                    if (difficulty && t.difficulty !== difficulty) return false;
+                    return true;
+                });
+                
+                activeTab === 'card' ? renderCardView() : renderDataPreview();
+            }
+
+            function saveToLocalStorage() {
+                localStorage.setItem(CONFIG.storageKey, JSON.stringify(scrapedTopics));
+                setStatus('success', '✅ data saved');
+            }
+
+            function loadFromLocalStorage() {
+                try {
+                    const saved = localStorage.getItem(CONFIG.storageKey);
+                    if (saved) {
+                        scrapedTopics = JSON.parse(saved);
+                        filteredTopics = [...scrapedTopics];
+                        updateUIAfterScrape();
+                        setStatus('success', `✅ loaded ${scrapedTopics.length} topics`);
+                    } else setStatus('warning', '⚠️ no saved data');
+                } catch (e) {
+                    setStatus('error', '❌ failed to load');
+                }
+            }
+
+            function exportToJsonFile() {
+                const data = JSON.stringify(scrapedTopics, null, 2);
+                const blob = new Blob([data], { type: 'application/json' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = `gfg_webdev_${new Date().toISOString().slice(0, 10)}.json`;
+                a.click();
+                setStatus('success', `✅ exported ${scrapedTopics.length} topics`);
+            }
+
+            async function generateAcademicPDF() {
+                if (filteredTopics.length === 0) {
+                    setStatus('warning', '⚠️ no topics to generate pdf');
+                    return;
+                }
+                
+                setStatus('loading', '📄 generating pdf...');
+                
+                try {
+                    const { jsPDF } = window.jspdf;
+                    const pdf = new jsPDF();
+                    
+                    pdf.setFontSize(28);
+                    pdf.setTextColor(0, 122, 204);
+                    pdf.text('Web Development', 20, 30);
+                    pdf.text('Learning Material', 20, 45);
+                    
+                    pdf.setFontSize(14);
+                    pdf.setTextColor(0, 0, 0);
+                    pdf.text(`Generated: ${new Date().toLocaleDateString()}`, 20, 70);
+                    pdf.text(`Articles: ${filteredTopics.length}`, 20, 80);
+                    
+                    pdf.setFontSize(12);
+                    pdf.setTextColor(100, 100, 100);
+                    pdf.text(`Generated by: ${CONFIG.studentName}`, 20, 110);
+                    
+                    pdf.addPage();
+                    pdf.setFontSize(20);
+                    pdf.setTextColor(0, 122, 204);
+                    pdf.text('Table of Contents', 20, 30);
+                    
+                    let y = 50;
+                    filteredTopics.forEach((topic, i) => {
+                        if (y > 260) { pdf.addPage(); y = 30; }
+                        pdf.setFontSize(11);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(`${i+1}. ${topic.title.substring(0, 60)}`, 25, y);
+                        pdf.setFontSize(9);
+                        pdf.setTextColor(100, 100, 100);
+                        pdf.text(`   Difficulty: ${topic.difficulty}`, 25, y+5);
+                        y += 12;
+                    });
+                    
+                    filteredTopics.forEach((topic, i) => {
+                        pdf.addPage();
+                        y = 30;
+                        
+                        pdf.setFontSize(16);
+                        pdf.setTextColor(0, 122, 204);
+                        pdf.text(`${i+1}. ${topic.title}`, 20, y);
+                        y += 10;
+                        
+                        pdf.setFontSize(10);
+                        pdf.setTextColor(0, 0, 0);
+                        pdf.text(`Difficulty: ${topic.difficulty}`, 20, y);
+                        y += 8;
+                        
+                        pdf.setFontSize(12);
+                        pdf.setTextColor(0, 122, 204);
+                        pdf.text('Key Concepts:', 20, y);
+                        y += 6;
+                        
+                        pdf.setFontSize(9);
+                        topic.concepts.forEach(concept => {
+                            if (y > 250) { pdf.addPage(); y = 30; }
+                            const lines = pdf.splitTextToSize(`• ${concept}`, 165);
+                            pdf.text(lines, 20, y);
+                            y += lines.length * 5 + 3;
+                        });
+                        y += 5;
+                        
+                        pdf.setFontSize(12);
+                        pdf.setTextColor(0, 122, 204);
+                        pdf.text('Complexity:', 20, y);
+                        y += 6;
+                        
+                        pdf.setFontSize(9);
+                        pdf.text(`Time: ${topic.timeComplexity}`, 25, y);
+                        y += 5;
+                        pdf.text(`Space: ${topic.spaceComplexity}`, 25, y);
+                        
+                        pdf.setFontSize(7);
+                        pdf.setTextColor(150, 150, 150);
+                        pdf.text(`Page ${pdf.internal.getNumberOfPages()} | Generated by ${CONFIG.studentName}`, 20, 285);
+                    });
+                    
+                    pdf.save(`GFG_WebDev_${new Date().toISOString().slice(0,10)}.pdf`);
+                    setStatus('success', '✅ pdf generated!');
+                    
+                } catch (error) {
+                    setStatus('error', `❌ pdf failed: ${error.message}`);
+                }
+            }
+
+            elements.scrapeBtn.addEventListener('click', startScraping);
+            elements.searchFilter.addEventListener('input', filterTopics);
+            elements.difficultyFilter.addEventListener('change', filterTopics);
+            elements.saveJsonBtn.addEventListener('click', saveToLocalStorage);
+            elements.loadJsonBtn.addEventListener('click', loadFromLocalStorage);
+            elements.exportJsonBtn.addEventListener('click', exportToJsonFile);
+            elements.generatePdfBtn.addEventListener('click', generateAcademicPDF);
+            
+            elements.cardViewTab.addEventListener('click', () => {
+                activeTab = 'card';
+                elements.cardViewTab.classList.add('active');
+                elements.previewTab.classList.remove('active');
+                renderCardView();
+            });
+            
+            elements.previewTab.addEventListener('click', () => {
+                activeTab = 'preview';
+                elements.previewTab.classList.add('active');
+                elements.cardViewTab.classList.remove('active');
+                renderDataPreview();
+            });
+
+            setStatus('info', '⚡ ready to scrape', 4000);
+        })();
+    </script>
+</body>
+</html>
